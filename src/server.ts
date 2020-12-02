@@ -6,7 +6,6 @@ import * as socket from './socket'
 import * as cors from 'cors'
 import { corsOptions, corsMiddleware } from './cors'
 
-const env = process.env.NODE_ENV
 const app = express()
 const server = http.createServer(app)
 
@@ -17,15 +16,13 @@ app.use(express.json())
 
 app.use(cors(corsOptions(origins)), corsMiddleware)
 
-let netlifyProdEndpoint = env === 'development' ? '' : '/.netlify/functions/server'
-
-app.use(`${netlifyProdEndpoint}/io`, socket.router)
+app.use('/io', socket.router)
 
 server.listen(port, () => console.log(`Server running on port ${port}`))
 
 socket.initialize(io(server, {
-	path: `${netlifyProdEndpoint}/socket`,
-	origins: env === 'development' ? '*' : 'https://board-master.netlify.app',
+	path: '/socket',
+	origins: 'https://board-master.netlify.app',
 	serveClient: false
 }))
 
