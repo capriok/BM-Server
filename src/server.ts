@@ -17,10 +17,6 @@ app.use(express.json())
 
 app.use(cors(corsOptions(origins)), corsMiddleware)
 
-console.log(__dirname)
-
-app.use(express.static(__dirname + '/public'))
-
 let netlifyProdEndpoint = env === 'development' ? '' : '/.netlify/functions/server'
 
 app.use(`${netlifyProdEndpoint}/io`, socket.router)

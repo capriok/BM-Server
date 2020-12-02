@@ -5,9 +5,8 @@
   "main": "functions/server.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development node -r dotenv/config -r ts-node/register ./src/server.ts",
-    "start": "node dist/server.js",
-    "build": "cross-env NODE_ENV=production tsc",
     "dev:watch": "nodemon",
+    "start": "cross-env NODE_ENV=production node dist/server.js",
     "postinstall": "tsc"
   },
   "engines": {
