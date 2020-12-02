@@ -21,8 +21,7 @@ app.use('/io', socket.router)
 server.listen(port, () => console.log(`Server running on port ${port}`))
 
 socket.initialize(io(server, {
-	path: '/socket',
-	origins: 'https://board-master.netlify.app',
+	path: '/socket.io',
 	serveClient: false
 }))
 
