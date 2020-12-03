@@ -10,7 +10,7 @@ const app = express()
 const server = http.createServer(app)
 
 const port = process.env.PORT || 9000
-const origins = ['http://localhost:3000', 'https://board-master.netlify.app', 'https://bm-server.herokuapp.com']
+const origins = ['http://localhost:3000', 'https://board-master.netlify.app', 'https://board-master.kylecaprio.dev']
 
 app.use(express.json())
 
