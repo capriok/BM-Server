@@ -28,7 +28,7 @@ export namespace BMClasses {
 		}
 
 		addRoom(room: RoomClass): void {
-			if (!this.getRoom(room.name)) this.rooms.push(room)
+			if (!this.getRoom(room.name)) this.rooms = [room, ...this.rooms]
 		}
 		addUser({ room, user }: { room: string, user: UserClass }): void {
 			const emptyRoom = this.getRoom(room).roomId === ''

@@ -4,7 +4,7 @@ import * as http from 'http'
 import * as serverless from 'serverless-http'
 import * as socket from './socket'
 import * as cors from 'cors'
-import { corsOptions, corsMiddleware } from './cors'
+import { corsOptions, corsMiddleware } from './cors/cors'
 
 const app = express()
 const server = http.createServer(app)

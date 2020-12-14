@@ -1,5 +1,5 @@
 export const router = require('express').Router()
-import { BMClasses } from './classes/rooms'
+import { BMClasses } from './classes'
 const Rooms = new BMClasses.RoomsClass()
 
 export function initialize(io: any) {
@@ -183,7 +183,7 @@ export function initialize(io: any) {
 			}, 1000)
 		})
 
-		// // MATHC OUTCOME CHAT MESSAGE
+		// // MATCH OUTCOME CHAT MESSAGE
 		socket.on('match-outcome-message', (payload: { outcome: string, winner?: any, loser?: any }) => {
 			socket.to(Room.name).emit('new-message', {
 				name: null,
@@ -195,6 +195,16 @@ export function initialize(io: any) {
 		})
 
 
+		// // KICK USER FROM ROOM
+		socket.on('kick-user', (payload: typeof User) => {
+			Rooms.removeUser({ room: Room.name, user: payload })
+			console.log(`USER REMOVED FROM ROOM ${Room.name}:`, payload.name)
+
+			io.to(payload.userId).emit('user-kicked', Rooms.getUsers(Room.name))
+			io.to(Room.name).emit('room-users', Rooms.getUsers(Room.name))
+		})
+
+
 		// // SOCKET DISCONNECTION
 		socket.on('disconnect', () => {
 			if (Room === undefined) return
@@ -202,6 +212,8 @@ export function initialize(io: any) {
 			if (leavingSocket === undefined) return
 
 			Rooms.removeUser({ room: Room.name, user: leavingSocket })
+			console.log({ room: Room.name, user: leavingSocket });
+
 
 			io.to(Room.name).emit("new-message", {
 				name: leavingSocket.name,
